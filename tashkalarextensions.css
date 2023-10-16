@@ -1,0 +1,921 @@
+/**
+ *------
+ * BGA framework: © Gregory Isabelli <gisabelli@boardgamearena.com> & Emmanuel Colin <ecolin@boardgamearena.com>
+ * TashKalarExpansions implementation : © Benjamin Wack <benjamin.wack@free.fr>
+ *
+ * This code has been produced on the BGA studio platform for use on http://boardgamearena.com.
+ * See http://en.boardgamearena.com/#!doc/Studio for more information.
+ * -----
+ *
+ * tashkalarexpansions.css
+ *
+ * TashKalarExpansions stylesheet
+ *
+ */
+
+/*
+    This is the CSS stylesheet of your game User Interface.
+    
+    Styles defined on this file will be applied to the HTML elements you define in your
+    HTML template (tashkalarexpansions_tashkalarexpansions.tpl), and to HTML elements you create dynamically
+    (in tashkalarexpansions.js).
+    
+    Usually, you are using CSS to:
+    
+    1°) define the overall layout of your game
+        (ex: place the board on the top left, place player's hand beside, place the deck on the right, ...).
+
+    2°) create your CSS-sprites:
+        All images of your games should be gathered into a small number of image files. Then, using
+        background-image and background-position CSS properties, you create HTML blocks that can 
+        display these images correctly (see example below).
+    
+    3°) ... anything else:
+        It is really easy to add and remove CSS classes dynamically from your Javascript with
+        dojo.addClass and dojo.removeClass. It is also easy to check if an element has a class
+        (dojo.hasClass) or to get all elements with a specific class (dojo.query). This is why,
+        very often, using CSS classes for the logic of your user interface allow you to do complex
+        thing easily.
+        
+        
+     Note: on the production platform, this file will be compressed and comments will be removed.
+           Consequently, don't hesitate to put as many comments as necessary.
+*/
+
+@import url(../../../css/csslayer.css); /* Note: you must not use any @import directive other than this one */
+
+/********* You can start writing your CSS below this line: **********/
+
+/* General setup */
+
+.endwarning{
+	color:white;
+	background-color:black;
+	padding:5px;
+	margin:5px;
+	display:none;
+	text-align:center;
+	font-weight:bold;
+}
+
+#board_tasks {
+    float: left;
+}
+
+#board {
+    width: 466px;
+    height: 466px;
+    border-width: 7px;
+    border-style: solid;
+    border-color: #ead4bc;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.highform {
+    background-image: url('img/board_HF.jpg');
+}
+
+.deathmatch {
+    background-image: url('img/board_DM.jpg');
+}
+
+#selection_overlay {
+    width: 466px;
+    min-height: 466px;
+    background-image: url('img/selection.png');
+    background-repeat: no-repeat;
+    background-size:46%;
+    position: absolute;
+    top: 90px; /*41px;*/
+    right: -127px; /*-109px;*/
+    visibility:hidden;
+}
+
+/* Undo/redo arrows by Visual Pharm www.icons8.com */
+/* under CC-BY-ND 3.0 */
+.undob {
+    width: 32px;
+    height: 32px;
+    position: relative;
+    float:right;
+    /* top:0px; */
+    /* right: 80px; */
+    background-image: url('img/icons.png');
+    background-position: -179px 0px;
+    cursor: pointer;
+}
+
+.redob {
+    width: 32px;
+    height: 32px;
+    position: relative;
+    float:right;
+    /* top:0px; */
+    /* right: 48px; */
+    background-image: url('img/icons.png');
+    background-position: -211px 0px;
+    cursor: pointer;
+}
+
+.dimmedbutton, #noWarpButton {
+    cursor: not-allowed;
+}
+
+.dimmedbutton div {
+    width: 32px;
+    height: 32px;
+    background-color: #F8F8F8;
+    opacity : 0.8;
+}
+
+#played_hand {
+    margin-left: 485px; 
+}
+
+/*
+#played {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 5px;
+    padding-top: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    width: 170px;
+}
+*/
+
+.spectatorMode #my_hand {
+    display: none;
+}
+
+#my_hand {
+    margin-top: 5px;
+    padding-top: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    min-width: 260px;
+}
+
+#hand {
+}
+
+#hand .stockitem, #discard .stockitem {
+    border-radius: 8px;
+}
+
+#the_tasks, #destroyed_pieces{
+    margin-top: 5px;
+    padding-right: 5px;
+    width: 465px;
+}
+
+#next_task {
+}
+
+/* In-game assistance */
+.square {
+    width: 45px;
+    height: 45px;
+    position: absolute;
+    z-index:20;
+}
+
+.above{
+    z-index:30;
+}
+
+.square_summon{
+    width: 45px;
+    height: 45px;
+    position: absolute;
+    z-index:10;
+    border-style: none;
+    border-color: white;
+    border-width: 0px;
+    border-radius: 20px;
+    box-shadow: 0 0 5px 5px white;
+    background-color : white;
+    opacity : 0;
+    filter:alpha(opacity=0); /* For IE8 and earlier */  
+}
+
+.summonBeing {
+    background-color : white;
+    opacity : 0;
+}
+
+.claimTask {
+    background-color : orange;
+    opacity : 0;
+}
+
+.clickable, .moveUndo {
+    opacity : 0.3;
+    filter:alpha(opacity=30); /* For IE8 and earlier */  
+    cursor: pointer;
+}
+
+.moveUndo, .pickPiece, .capturePiece {
+    background-color : white;
+}
+
+.movePiece , .moveBeing, .moveDest, .choosePiece, .freePiece {
+    background-color : blue;
+}
+
+.destroyPiece {
+    background-color : red;
+}
+
+.upgradePiece, .placePiece, .chooseSquare {
+    background-color : yellow;
+}
+
+.downgradePiece {
+    background-color : black;
+}
+
+.convertPiece {
+    background-color : green;
+}
+
+.becomeGateway {
+    background-color : orange;
+}
+
+.shootPieces, .chooseDirectionMirror {
+    background-image: url('img/icons.png');
+    width: 47px;
+    opacity : 0.8;
+    filter:alpha(opacity=80); /* For IE8 and earlier */  
+}
+
+/* Player token sprites */
+.token_037cb1{
+    background-position: 0% 0%;
+}
+.token_dc2515{
+    background-position: 16.67% 0%;
+}
+.token_d6b156{
+    background-position: 33.33% 0%;
+}
+.token_8ec459{
+    background-position: 50% 0%;
+}
+.token_f0f9ff{
+    background-position: 66.67% 0%;
+}
+.token_f4913c{
+    background-position: 83.33% 0%;
+}
+.token_6a548f{
+    background-position: 100% 0%;
+}
+
+.token_000000{
+    opacity : 0.15;
+    filter:alpha(opacity=15); /* For IE8 and earlier */  
+}
+
+.common {
+    background-image: url('img/common.png');
+}
+.heroic {
+    background-image: url('img/heroic.png');
+}
+.legendary {
+    background-image: url('img/legendary.png');
+}
+
+.token {
+    width: 45px;
+    height: 45px;
+    position:absolute;
+    z-index:10;
+}
+
+.additional_destroyed {
+    opacity: 0.5;
+}
+
+.card {
+    width: 125px;
+    height: 210px;
+    position: absolute;
+}
+
+.cardtooltip {
+    width: 250px;
+}
+
+.tasktooltip {
+    width: 406px;
+}
+
+/* Pieces left */
+
+.filler{
+    height:1px;
+}
+
+.pieces_left {
+    height: 32px;
+    display: inline-block;
+/*    clear: both; */
+/* margin-top: auto; */
+/* margin-bottom: auto; */
+}
+
+.piecesnum {
+    width: 20px;
+    float: left;
+    line-height: 32px;
+    text-align: right;
+    margin-right: 2px;
+    display: inline-block;
+    position:relative;
+    top:0px;
+    vertical-align:bottom;
+}
+
+.piecesicon {
+    width: 32px;
+    height: 32px;
+    background-size: 224px; /* CSS3 : not IE8 compliant... */
+    float:left;
+    top: 50%;
+    position: relative;
+    margin-top: -16px;
+    display: inline-block;
+}
+
+.pieceschoice {
+    width: 32px;
+    height: 32px;
+    background-size: 224px; /* CSS3 : not IE8 compliant... */
+    display: inline-block;
+    position: relative;
+}
+
+/* To center a block-level element of unknown width */
+/* http://stackoverflow.com/questions/3030121/how-can-i-center-a-box-of-unknown-width-in-css */
+.centered-block-outer {
+   overflow: hidden;
+   position: relative;/* ie7 needs position:relative here*/
+   clear: both;
+ }
+.centered-block-middle {
+  float: left;
+  position:relative;
+  left:50%;
+}
+.centered-block-inner {
+  float: left;
+  position:relative;
+  left:-50%;
+}
+
+#card_infos {
+    margin-bottom: 5px;
+}
+
+.cardsnum {
+    width: 20px;
+    float: left;
+    height: 30px;
+    line-height: 30px;
+    text-align: right;
+    margin-right: 5px;
+    display: inline-block;
+    position:relative;
+    top: 1px;
+    vertical-align:bottom;
+}
+
+.last_card {
+    display: inline-block;
+    padding: 0px 5px 0px;
+    margin-right: 10px;
+    vertical-align:top;
+}
+
+.last_card_icon {
+    display: inline-block;    
+    height: 60px;
+    width: 60px;
+    background-size: auto 105px;
+    margin-left: 5px;
+    margin-right: auto;
+    border-width: 0px;
+    border-radius: 6px;
+}
+
+.log_inlined {
+    float:right;
+}
+
+.logchunk {
+    display:inline-block;
+}
+
+.dimmedcard {
+    /* background-color: #ead4bc; */
+    opacity : 0.3;
+    cursor: not-allowed;
+}
+
+#decks_left {
+    height: auto;
+    margin-bottom: 5px;
+    padding: 0px 5px 0px;
+    display: inline-block;
+}
+/*
+#decks_left h4{
+    margin-left: 40px;
+}
+*/
+#decks_container {
+    width: 112px;
+    height: 48px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.shared_container {
+    width: 54px;
+    height: 48px;
+    display: inline-block;
+}
+
+.deck_container {
+    width: 46px;
+    height: 30px;
+    display: inline-block;
+}
+
+.container {
+    width: 55px;
+    height: 32px;
+    display: inline-block;
+}
+
+.legendarypieces_container {
+    margin-left: -3px;
+}
+
+.diff_container {
+    width: 55px;
+    height: 32px;
+    display: inline-block;
+}
+
+.melee_container {
+    width: 40px;
+    height: 32px;
+    float: left;
+    display: inline-block;
+}
+
+.cardsicon {
+    background-image: url('img/icons.png');
+    width: 18px;
+    height: 30px;
+    background-size: auto 30px;
+    float: left;
+    display: inline-block;
+}
+
+.cardsicon_deck {
+    background-position: -21px 0px;
+}
+
+#frozen_effect {
+    display: inline-block;    
+    margin-left: 5px;
+    margin-right: auto;
+    width: 60px;
+    height: 64px;
+}
+#frozen_card {
+    top: 4px;
+    position: absolute;
+    margin-left:0;
+    border-radius: 9px;
+}
+#ice {
+    background-image: url('img/icons.png');
+    width: 67px;
+    height: 64px;
+    left:-7px;
+    background-position: -275px 0px;
+    position: relative;
+}
+
+.frozenicon {
+    background-image: url('img/icons.png');
+    width: 16px;
+    height: 16px;
+    background-position: -342px 0px;
+    display:inline-block;
+}
+
+#gateway, #mini_gateway {
+    background-image: url('img/icons.png');
+    width: 40px;
+    height: 39px;
+    background-position: -388px 0px;
+    padding-bottom: 8px;
+    position: absolute;
+    display:inline-block;
+    z-index:15;
+}
+#mini_gateway {
+    transform: scale(0.75);
+    display:none;
+    top:-7px;
+    left:-4px;
+}
+
+#warp {
+    background-image: url('img/icons.png');
+    width: 64px;
+    height: 64px;
+    /* left:-2px; */
+    /* top:2px; */
+    background-position: -428px 0px;
+    position:relative;
+}
+#warp_effect {
+    display: inline-block;    
+    margin-left: 5px;
+    margin-right: auto;
+    width: 60px;
+    height: 64px;
+    /* filter: url(#transmissionerror); */
+}
+#warp_card {
+    /* top: 4px; */
+    height: 64px;
+    width: 64px;
+    position: absolute;
+    margin-left:0;
+    border-radius: 9px;
+    /* clip-path:circle(43%); */
+    clip-path:polygon(
+	/* 0% 0%, 50% 0%, 90% 30%, */
+	2% 14%, 28% 2%, 51% 2%, 74% 17%, 88% 39%, 92% 25%,
+	86% 2%, 98% 26%, 97% 51%, 84% 73%, 61% 88%, 75% 92%,
+	97% 86%, 72% 98%, 49% 98%, 26% 83%, 12% 61%, 8% 75%,
+	14% 100%, 2% 72%, 3% 45%, 17% 26%, 39% 12%, 25% 8%);
+}
+#captured_piece {
+    opacity:0;
+    top:30%;
+}
+#pending_malus {
+    color:red;
+    display:none;
+}
+.pending {
+    /* transform: rotate(180deg); */
+    -webkit-animation: myrot 1s; /* Chrome, Safari, Opera */
+    -webkit-animation-duration: 1s; /* Chrome, Safari, Opera */
+    -webkit-animation-fill-mode: forwards; /* Chrome, Safari, Opera */
+    animation-name: myrot;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+.unpending {
+    /* transform: rotate(180deg); */
+    -webkit-animation: myunrot 1s; /* Chrome, Safari, Opera */
+    -webkit-animation-duration: 1s; /* Chrome, Safari, Opera */
+    -webkit-animation-fill-mode: forwards; /* Chrome, Safari, Opera */
+    animation-name: myunrot;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+.warpicon {
+    background-image: url('img/icons.png');
+    width: 30px;
+    height: 17px;
+    background-position: -358px 0px;
+    display:inline-block;
+}
+
+/* Actions icon by Oxygen Team http://www.oxygen-icons.org */
+/* License: Free for non-commercial use. */
+/*
+.actionsicon {
+    background-image: url('img/icons.png');
+    width: 16px;
+    height: 16px;
+    float: left;
+    display: inline-block;
+}
+*/
+
+/*** DEPRECATED
+#cardsicon_legends {
+    background-position: -76px 0px;
+}
+
+#cardsicon_flares {
+    background-position: -105px 0px;
+}
+***/
+
+/* Flares diff icons */
+
+/*
+.flare_diff {
+    height: 32px;
+    float:right;
+    margin-bottom: 5px;
+    margin-top: 5px; 
+}
+*/
+
+.difficon {
+    width: 32px;
+    height: 29px;
+    float:left;
+    top: 50%;
+    position: relative;
+    margin-top: -14px;
+    display: inline-block;
+}
+
+.diffnum {
+    width: 20px;
+    float: left;
+    line-height: 32px;
+    text-align: right;
+    margin-right: 2px;
+    display: inline-block;
+    position:relative;
+    top:0px;
+    vertical-align:bottom;
+}
+
+.piecesdiff {
+    background-image: url('img/icons.png');
+    background-position: -83px 0px;
+}
+.upgradeddiff {
+    background-image: url('img/icons.png');
+    background-position: -115px 0px;
+}
+
+.improicon {
+    width: 32px;
+    height: 32px;
+    background-image: url('img/heroic.png');
+    background-size: 224px; /* CSS3 : not IE8 compliant... */
+    float:left;
+    top: 50%;
+    position: relative;
+    margin-left: 3px;
+    display: inline-block;
+}
+
+.meleeicon {
+    width: 16px;
+    height: 16px;
+    background-image: url('img/stars.png');
+    float:left;
+    top: 8px;
+    position: relative;
+    display: inline-block;    
+}
+
+.meleeicontitle {
+    width: 16px;
+    height: 16px;
+    background-image: url('img/stars.png');
+    position: relative;
+    display: inline-block;
+}
+
+.melee_037cb1{
+    background-position: 0% 0%;
+}
+.melee_dc2515{
+    background-position: 16.67% 0%;
+}
+.melee_d6b156{
+    background-position: 33.33% 0%;
+}
+.melee_8ec459{
+    background-position: 50% 0%;
+}
+.melee_f0f9ff{
+    background-position: 66.67% 0%;
+}
+.melee_f4913c{
+    background-position: 83.33% 0%;
+}
+.melee_6a548f{
+    background-position: 100% 0%;
+}
+
+/*
+.piecesdiff_activable {
+    background-image: url('img/icons.png');
+    background-position: -214px 0px;
+}
+.upgradeddiff_activable {
+    background-image: url('img/icons.png');
+    background-position: -254px 0px;
+}
+*/
+
+/* Chrome, Safari, Opera */
+/*
+@-webkit-keyframes myglow {
+    50% {box-shadow: 0 0 10px 5px Crimson;}
+}
+*/
+
+/* Standard syntax */
+/*
+@keyframes myglow {
+    50% {box-shadow: 0 0 10px 5px Crimson;}
+}
+*/
+
+#hand .activable{
+    border-color: Aqua;
+    border-width: 0px;
+    border-style: solid;
+    border-radius: 13px !important;
+    box-shadow: 0 0 10px 5px Aqua;  /*61d8f4 */
+    -webkit-animation: myglow 1.5s infinite; /* Chrome, Safari, Opera */
+    animation: myglow 1.5s infinite;
+}
+
+
+#DMmark {
+    background-image: url('img/icons.png');
+    background-position: -147px 0px;
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+    top: 10px;
+    position: relative;    
+}
+
+#DMMmark {
+    background-image: url('img/icons.png');
+    background-position: -243px 0px;
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+    top: 10px;
+    position: relative;    
+}
+
+/*
+.vs_037cb1{
+    background-position: 0px 0px;
+}
+.vs_dc2515{
+    background-position: -30px 0px;
+}
+.vs_d6b156{
+    background-position: -60px 0px;
+}
+.vs_8ec459{
+    background-position: -90px 0px;
+}
+*/
+
+/* Tasks */
+
+.claimable{
+/*    outline-style: solid;
+    outline-width: 2px;
+    outline-color: lime; */
+    cursor: pointer;
+}
+
+.tmp_task{
+    background-image: url('img/tasks.jpg');
+    width: 150px;
+    height: 89px;
+    position: absolute;
+}
+
+/* Discard (for Kiskin Spirit) */
+
+/* #my_discard { */
+/*     display: block; */
+/* } */
+.hidden {
+    display: none;
+}
+
+#discard_title{
+    display:inline-block;
+    margin-top:0px;
+    margin-bottom:5px;
+}
+
+/*** Display discard on hovering : rejected
+#discard_title:hover ~ #discard, #discard:hover {
+    display:block;
+}
+***/
+
+.tmp_card {
+    width: 125px;
+    height: 210px;
+    position: absolute;
+}
+
+.Flare {
+    background-image: url('img/flares.jpg');
+}
+
+.Northern {
+    background-image: url('img/Northern.jpg');
+}
+
+.Southern {
+    background-image: url('img/Southern.jpg');
+}
+
+.Highland {
+    background-image: url('img/Highland.jpg');
+}
+
+.Sylvan {
+    background-image: url('img/Sylvan.jpg');
+}
+
+.Everfrost {
+    background-image: url('img/Everfrost.jpg');
+}
+
+.Nethervoid {
+    background-image: url('img/Nethervoid.jpg');
+}
+
+.Etherweave {
+    background-image: url('img/Etherweave.jpg');
+}
+
+.Legends {
+    background-image: url('img/Legends.jpg');
+}
+
+.bigcard {
+    width: 250px;
+    height: 420px;
+/*    position: absolute;*/
+}
+
+.Flare_big {
+    background-image: url('img/flares_big.jpg');
+}
+
+.Northern_big {
+    background-image: url('img/Northern_big.jpg');
+}
+
+.Southern_big {
+    background-image: url('img/Southern_big.jpg');
+}
+
+.Highland_big {
+    background-image: url('img/Highland_big.jpg');
+}
+
+.Sylvan_big {
+    background-image: url('img/Sylvan_big.jpg');
+}
+
+.Everfrost_big {
+    background-image: url('img/Everfrost_big.jpg');
+}
+
+.Nethervoid_big {
+    background-image: url('img/Nethervoid_big.jpg');
+}
+
+.Etherweave_big {
+    background-image: url('img/Etherweave_big.jpg');
+}
+
+.Legends_big {
+    background-image: url('img/Legends_big.jpg');
+}
+
+.tasks_big {
+    background-image: url('img/tasks_big.jpg');
+    width: 406px;
+    height: 240px;
+}
